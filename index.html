@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Дневник питания и тренировок</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;700&display=swap">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-mode="food">
+<div class="wrap">
+
+  <h1>Дневник питания и тренировок</h1>
+
+
+  <div class="tabs" role="tablist">
+    <button role="tab" data-mode="food">Питание</button>
+    <button role="tab" data-mode="work">Тренировки</button>
+  </div>
+
+
+  <div class="datebar">
+    <button class="ib" id="prev" aria-label="Предыдущий день">‹</button>
+    <input type="date" id="date" aria-label="Дата">
+    <button class="ib" id="next" aria-label="Следующий день">›</button>
+    <button class="btn ghost" id="todayBtn">Сегодня</button>
+  </div>
+  <span class="dlabel" id="dlabel"></span>
+
+
+  <section class="panel" aria-live="polite">
+    <div class="lbl" id="pLabel"></div>
+
+    <div class="big">
+      <b id="pBig">0</b>
+      <span id="pUnit"></span>
+    </div>
+
+    <div class="note" id="pNote"></div>
+
+    <div class="seg" id="seg"></div>
+    <ul class="leg" id="leg"></ul>
+
+    <div class="goalrow" id="goalRow">
+      <label for="goal">Цель на день</label>
+      <input id="goal" type="number" min="500" max="10000" step="50" inputmode="numeric">
+      <span>ккал</span>
+    </div>
+
+    <div class="tiles" id="tiles"></div>
+
+    <div class="bal">
+      <div><span>Съедено</span><b id="bEat">0</b></div>
+      <div><span>Сожжено</span><b id="bBurn">0</b></div>
+      <div><span>Баланс, ккал</span><b id="bNet">0</b></div>
+    </div>
+  </section>
+
+
+  <div class="sheet">
+
+    <section>
+      <h2 id="formTitle">Добавить приём пищи</h2>
+
+      <form id="formFood" class="grid" autocomplete="off">
+        <label class="s6">Название
+          <input name="nm" list="foodNames" required maxlength="60" placeholder="Например, овсянка с бананом">
+        </label>
+        <label class="s3">Приём пищи
+          <select name="meal">
+            <option>Завтрак</option>
+            <option>Обед</option>
+            <option>Ужин</option>
+            <option>Перекус</option>
+          </select>
+        </label>
+        <label class="s3">Калории, ккал
+          <input name="kcal" type="number" inputmode="decimal" min="0" max="10000" step="any" required>
+        </label>
+        <label class="s2">Белки, г
+          <input name="pr" type="number" inputmode="decimal" min="0" step="any">
+        </label>
+        <label class="s2">Жиры, г
+          <input name="fa" type="number" inputmode="decimal" min="0" step="any">
+        </label>
+        <label class="s2">Углеводы, г
+          <input name="ca" type="number" inputmode="decimal" min="0" step="any">
+        </label>
+        <div class="s6 btns">
+          <button class="btn go" type="submit">Добавить</button>
+          <button class="btn ghost cancel" type="button" hidden>Отмена</button>
+        </div>
+      </form>
+
+      <form id="formWork" class="grid" autocomplete="off" hidden>
+        <label class="s6">Название
+          <input name="nm" list="workNames" required maxlength="60" placeholder="Например, бег в парке">
+        </label>
+        <label class="s3">Тип
+          <select name="tp">
+            <option>Кардио</option>
+            <option>Силовая</option>
+            <option>Растяжка</option>
+            <option>Другое</option>
+          </select>
+        </label>
+        <label class="s3">Длительность, мин
+          <input name="mn" type="number" inputmode="decimal" min="1" max="1440" step="any" required>
+        </label>
+        <label class="s3">Интенсивность
+          <select name="it">
+            <option value="1">Лёгкая</option>
+            <option value="2" selected>Средняя</option>
+            <option value="3">Высокая</option>
+          </select>
+        </label>
+        <label class="s3">Сожжено, ккал
+          <input name="kc" type="number" inputmode="decimal" min="0" step="any" placeholder="необязательно">
+        </label>
+        <div class="s6 btns">
+          <button class="btn go" type="submit">Добавить</button>
+          <button class="btn ghost cancel" type="button" hidden>Отмена</button>
+        </div>
+      </form>
+
+      <datalist id="foodNames"></datalist>
+      <datalist id="workNames"></datalist>
+    </section>
+
+
+    <section>
+      <h2 id="listTitle">Записи за день</h2>
+      <div id="list"></div>
+    </section>
+
+
+    <section>
+      <h2 id="chartTitle">Последние 7 дней</h2>
+      <div class="chart" id="chart"></div>
+      <p class="avg" id="avg"></p>
+    </section>
+
+  </div>
+
+
+  <div class="warn" id="warn" hidden>
+    Браузер не даёт сохранять данные: записи останутся только до закрытия страницы.
+  </div>
+
+
+  <footer>
+    Все записи хранятся только в вашем браузере.<br>
+    <button class="link" id="wipe">Очистить все данные</button>
+  </footer>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
